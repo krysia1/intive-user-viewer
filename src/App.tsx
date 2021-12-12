@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import MainPage from './pages/MainPage';
+import './styles/index.css';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import UserPage from './pages/UserPage';
+import UsersContext from './contexts/UsersContext';
 
 function App() {
+
+  const [listOfUsers, setListOfUsers] = useState(
+    {} as Array<UserInterfaceContext>
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <UsersContext.Provider value={{ listOfUsers, setListOfUsers }}>
+        <Router>
+          <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/user/:id' element={<UserPage />} />
+          </Routes>
+        </Router>
+      </UsersContext.Provider>
   );
 }
 
